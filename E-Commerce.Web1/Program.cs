@@ -34,3 +34,10 @@ namespace E_Commerce.Web1
         }
     }
 }
+
+
+
+// GetAllProducts => product
+// GetById => product/{id}
+// GetBrands => product/brands
+// GetTypes => product/types
