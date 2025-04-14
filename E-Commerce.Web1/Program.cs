@@ -8,7 +8,7 @@ namespace E_Commerce.Web1
 {
     public class Program
     {
-        public static async void Main(string[] args)
+        public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +26,7 @@ namespace E_Commerce.Web1
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
-            await InitializeDbAsync(app);
+             InitializeDbAsync(app);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -44,14 +44,16 @@ namespace E_Commerce.Web1
 
             app.Run();
         }
-    
-    public static async Task InitializeDbAsync (WebApplication app)
+
+        public static async Task InitializeDbAsync(WebApplication app)
         {
             using var scope = app.Services.CreateScope();
             var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
             await dbInitializer.InitializeAsync();
         }
     }
+
+
 }
 
 
