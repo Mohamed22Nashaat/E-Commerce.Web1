@@ -5,6 +5,7 @@ namespace Shared.DataTransferObjects.Products
     // C# 9 
     public record ProductResponse
     {
+        public int Id { get; set; } 
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
         public string PictureUrl { get; set; } = default!;

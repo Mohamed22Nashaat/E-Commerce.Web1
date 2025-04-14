@@ -1,7 +1,5 @@
 ﻿
-using AutoMapper;
-using Domain.Contracts;
-using Domain.Models;
+
 
 namespace Services
 {
