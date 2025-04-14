@@ -22,3 +22,9 @@ namespace Persistence.Repositories
     }
 }
 //unitofwork.GetRepository<Product, int>();=> GenericRepository<Product, int>  
+
+/// Request => Product Controller => Product Service [2 objetcs from Product Repo ]
+/// Container for the Created Repos [Dictionary]
+/// Dictionary<string, object> _repositories = [];
+/// GetRepository=> Check if the required repo is already created => return without creating new object
+/// if not => create new object and add it to the dictionary and return it
