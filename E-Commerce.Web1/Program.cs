@@ -41,7 +41,7 @@ namespace E_Commerce.Web1
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             // app.UseAuthorization();
