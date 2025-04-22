@@ -11,5 +11,7 @@ namespace Domain.Contracts
         void Delete(TEntity entity);
         Task<TEntity?> GetAsync(TKey key);
         Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = false);
+       // Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }
