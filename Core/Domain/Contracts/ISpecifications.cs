@@ -9,6 +9,8 @@ namespace Domain.Contracts
         Expression<Func<T, bool>> Criteria { get; } 
 
         List<Expression<Func<T, object>>> IncludeExpressions { get; }
+        Expression<Func<T, object>>? OrderBy { get; }
+        Expression<Func<T, object>>? OrderByDescending { get; }
     }
 }
 
