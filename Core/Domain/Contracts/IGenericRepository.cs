@@ -9,8 +9,9 @@ namespace Domain.Contracts
         void Add(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);
-        Task<TEntity?> GetAsync(TKey key);
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<TEntity?> GetAsync(TKey id);
+        Task<TEntity?> GetAsync(ISpecifications<TEntity> specifications);
+        Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity> specifications);
         Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = false);
        // Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate);
     }
