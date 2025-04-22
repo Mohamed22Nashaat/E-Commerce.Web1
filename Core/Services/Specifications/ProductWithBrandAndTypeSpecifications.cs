@@ -20,8 +20,10 @@ namespace Services.Specifications
         }
 
         // Use this CTOR to create Query to Get All Products
-        public ProductWithBrandAndTypeSpecifications()
-            : base(null)
+        public ProductWithBrandAndTypeSpecifications(int? brandId,int? typeId)
+            : base(product=>
+            (!brandId.HasValue || product.BrandId == brandId.Value)&&
+            (typeId.HasValue || product.TypeId == typeId.Value))
         {
             // Add Includes
             AddInclude(p => p.ProductBrand);
