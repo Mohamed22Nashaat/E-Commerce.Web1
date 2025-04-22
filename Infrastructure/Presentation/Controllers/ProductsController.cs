@@ -8,7 +8,7 @@ namespace Presentation.Controllers
     [ApiController]
     public class ProductsController(IServiceManager serviceManager) : ControllerBase
     {
-        // Get all products => IEnumerable<Product> 
+        // Get all products => IEnumerable<Product> .
         // Get product by id
         // Get All Brands
         // Get All Types
