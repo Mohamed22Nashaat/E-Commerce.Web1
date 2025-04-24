@@ -1,6 +1,4 @@
-﻿
-
-namespace Shared.DataTransferObjects
+﻿namespace Shared.DataTransferObjects.Products
 {
     public enum ProductSortingOptions
     {

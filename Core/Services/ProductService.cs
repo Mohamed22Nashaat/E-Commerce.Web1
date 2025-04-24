@@ -1,26 +1,30 @@
 ﻿
 
 
+using Domain.Exceptions;
 using Services.Specifications;
-using Shared.DataTransferObjects;
 
 namespace Services
 {
     internal class ProductService(IUnitOfWork unitOfWork, IMapper mapper) 
         : IProductService
     {
-        public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync(int? brandId, int? typeId, ProductSortingOptions options)
+        public async Task<PaginatedResponse<ProductResponse>> GetAllProductsAsync(ProductQueryParameters queryParameters)
         {
-            var specifications = new ProductWithBrandAndTypeSpecifications(brandId,typeId,options);
+            var specifications = new ProductWithBrandAndTypeSpecifications(queryParameters);
             var product = await unitOfWork.GetRepository<Product, int>().GetAllAsync(specifications);
-            return mapper.Map<IEnumerable<Product>, IEnumerable<ProductResponse>>(product);
+            var data = mapper.Map<IEnumerable<Product>, IEnumerable<ProductResponse>>(product);
+            var pageCount = data.Count();
+            var totalCount = await unitOfWork.GetRepository<Product, int>().CountAsync(new ProductCountSpecifications(queryParameters));
+            return new(queryParameters.PageIndex,pageCount, totalCount, data);
         }
 
         
         public async Task<ProductResponse> GetProductAsync(int id)
         {
             var specifications = new ProductWithBrandAndTypeSpecifications(id);
-            var product = await unitOfWork.GetRepository<Product, int>().GetAsync(specifications);
+            var product = await unitOfWork.GetRepository<Product, int>().GetAsync(specifications) ??
+                throw new ProductNotFoundException(id);
             return mapper.Map<Product, ProductResponse>(product);
         }
 

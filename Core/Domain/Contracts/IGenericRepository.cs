@@ -13,6 +13,7 @@ namespace Domain.Contracts
         Task<TEntity?> GetAsync(ISpecifications<TEntity> specifications);
         Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity> specifications);
         Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = false);
+        Task<int> CountAsync(ISpecifications<TEntity> specifications);
        // Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }
