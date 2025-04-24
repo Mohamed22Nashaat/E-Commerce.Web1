@@ -8,11 +8,13 @@ namespace Services
     internal class ProductService(IUnitOfWork unitOfWork, IMapper mapper) 
         : IProductService
     {
-        public async Task<IEnumerable<ProductResponse>> GetAllProductsAsync(ProductQueryParameters queryParameters)
+        public async Task<PaginatedResponse<ProductResponse>> GetAllProductsAsync(ProductQueryParameters queryParameters)
         {
             var specifications = new ProductWithBrandAndTypeSpecifications(queryParameters);
             var product = await unitOfWork.GetRepository<Product, int>().GetAllAsync(specifications);
-            return mapper.Map<IEnumerable<Product>, IEnumerable<ProductResponse>>(product);
+            var data = mapper.Map<IEnumerable<Product>, IEnumerable<ProductResponse>>(product);
+            var pageCount = data.Count();
+            return new(queryParameters.PageIndex,pageCount,0,data);
         }
 
         

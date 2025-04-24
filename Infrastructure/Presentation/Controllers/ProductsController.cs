@@ -13,7 +13,7 @@ namespace Presentation.Controllers
         // Get All Brands
         // Get All Types
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts([FromQuery] ProductQueryParameters queryParameters) //Get BaseUrl/api/products
+        public async Task<ActionResult<PaginatedResponse<ProductResponse>>> GetAllProducts([FromQuery] ProductQueryParameters queryParameters) //Get BaseUrl/api/products
         {
             var products = await serviceManager.ProductService.GetAllProductsAsync(queryParameters);
             return Ok(products);
