@@ -67,5 +67,14 @@ namespace E_Commerce.Web1.Middelwares
                 await httpcontext.Response.WriteAsJsonAsync(response);
             }
         }
+
+    }
+    public static class CustomExceptionHandlerMiddlewareExtensions
+    {
+        public static IApplicationBuilder UseCustomExceptionMiddleware(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+            return app;
+        }
     }
 }
