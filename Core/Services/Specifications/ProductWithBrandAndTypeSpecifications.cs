@@ -21,21 +21,22 @@ namespace Services.Specifications
 
         // Use this CTOR to create Query to Get All Products
         // Use for filtration & sorting
-        public ProductWithBrandAndTypeSpecifications(int? brandId,int? typeId,ProductSortingOptions options)
-            : base(CreateCriteria(brandId,typeId))
+        public ProductWithBrandAndTypeSpecifications(ProductQueryParameters parameters)
+            : base(CreateCriteria(parameters))
         {
             // Add Includes
             AddInclude(p => p.ProductBrand);
             AddInclude(p => p.ProductType);
 
-            ApplySorting(options);
+            ApplySorting(parameters.options);
         }
 
-        private static System.Linq.Expressions.Expression<Func<Product, bool>> CreateCriteria(int? brandId, int? typeId)
+        private static System.Linq.Expressions.Expression<Func<Product, bool>> CreateCriteria(ProductQueryParameters parameters)
         {
             return product =>
-                (!brandId.HasValue || product.BrandId == brandId.Value) &&
-                (!typeId.HasValue || product.TypeId == typeId.Value);
+                (!parameters.BrandId.HasValue || product.BrandId == parameters.BrandId.Value) &&
+                (!parameters.TypeId.HasValue || product.TypeId == parameters.TypeId.Value) &&
+                (string.IsNullOrWhiteSpace(parameters.Search) || product.Name.ToLower().Contains(parameters.Search.ToLower()));
         }
             
 
