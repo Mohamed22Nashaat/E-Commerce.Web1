@@ -16,7 +16,7 @@ namespace Presentation.Controllers
 
         public async Task<ActionResult<ProductResponse>> GetProduct(int id)  //Get baseUrl/api/Products/{id}
         {
-            throw new Exception("Test exception");
+            //throw new Exception("Test exception");
             var products = await serviceManager.ProductService.GetProductAsync(id);
             return Ok(products);
         }

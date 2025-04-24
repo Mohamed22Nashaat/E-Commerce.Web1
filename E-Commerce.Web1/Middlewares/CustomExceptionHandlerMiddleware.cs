@@ -1,4 +1,5 @@
-﻿using Shared.ErrorModels;
+﻿using Domain.Exceptions;
+using Shared.ErrorModels;
 using System.Net;
 using System.Text.Json;
 
@@ -25,14 +26,20 @@ namespace E_Commerce.Web1.Middelwares
 
                 
                 // Set Status Code for the response
-                httpcontext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                //httpcontext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
                 // Set content Type for the response
                 httpcontext.Response.ContentType = "application/json";
                 // Response Object
                 var response = new ErrorDetails
                 {
-                    StatusCode = (int)HttpStatusCode.InternalServerError,
+                    
                     ErrorMessage = ex.Message
+                };
+
+                response.StatusCode = ex switch
+                {
+                    NotFoundException =>(int)HttpStatusCode.NotFound,
+                    _ =>(int)HttpStatusCode.InternalServerError
                 };
                 // return response as json
                 var jsonResult = JsonSerializer.Serialize(response);
