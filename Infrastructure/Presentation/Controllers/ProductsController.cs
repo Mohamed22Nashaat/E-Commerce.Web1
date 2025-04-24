@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServicesAbstractions;
-using Shared.DataTransferObjects;
 using Shared.DataTransferObjects.Products;
 
 namespace Presentation.Controllers

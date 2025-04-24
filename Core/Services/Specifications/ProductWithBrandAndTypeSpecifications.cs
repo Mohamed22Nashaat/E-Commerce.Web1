@@ -1,5 +1,4 @@
-﻿using Shared.DataTransferObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -21,15 +20,27 @@ namespace Services.Specifications
         }
 
         // Use this CTOR to create Query to Get All Products
+        // Use for filtration & sorting
         public ProductWithBrandAndTypeSpecifications(int? brandId,int? typeId,ProductSortingOptions options)
-            : base(product=>
-            (!brandId.HasValue || product.BrandId == brandId.Value)&&
-            (typeId.HasValue || product.TypeId == typeId.Value))
+            : base(CreateCriteria(brandId,typeId))
         {
             // Add Includes
             AddInclude(p => p.ProductBrand);
             AddInclude(p => p.ProductType);
 
+            ApplySorting(options);
+        }
+
+        private static System.Linq.Expressions.Expression<Func<Product, bool>> CreateCriteria(int? brandId, int? typeId)
+        {
+            return product =>
+                (!brandId.HasValue || product.BrandId == brandId.Value) &&
+                (!typeId.HasValue || product.TypeId == typeId.Value);
+        }
+            
+
+        private void ApplySorting(ProductSortingOptions options)
+        {
             switch (options)
             {
                 case ProductSortingOptions.NameAsc:
@@ -48,7 +59,5 @@ namespace Services.Specifications
                     break;
             }
         }
-
-
     }
 }

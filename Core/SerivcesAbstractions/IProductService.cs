@@ -1,6 +1,4 @@
-﻿
-using Shared.DataTransferObjects;
-using Shared.DataTransferObjects.Products;
+﻿using Shared.DataTransferObjects.Products;
 
 namespace ServicesAbstractions
 {
