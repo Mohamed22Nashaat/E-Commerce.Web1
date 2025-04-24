@@ -25,7 +25,15 @@ namespace Persistence.Repositories
             {
                 query = query.OrderByDescending(specifications.OrderByDescending);
             }
+
+
+            if (specifications.IsPaginated)
+            {
+                query = query.Skip(specifications.Skip).Take(specifications.Take);
+            }
             return query;
+
+
         }
     }
 }
