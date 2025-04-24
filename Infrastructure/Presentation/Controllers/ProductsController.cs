@@ -12,6 +12,14 @@ namespace Presentation.Controllers
         // Get product by id
         // Get All Brands
         // Get All Types
+        [HttpGet("{id}")]
+
+        public async Task<ActionResult<ProductResponse>> GetProduct(int id)  //Get baseUrl/api/Products/{id}
+        {
+            throw new Exception("Test exception");
+            var products = await serviceManager.ProductService.GetProductAsync(id);
+            return Ok(products);
+        }
         [HttpGet]
         public async Task<ActionResult<PaginatedResponse<ProductResponse>>> GetAllProducts([FromQuery] ProductQueryParameters queryParameters) //Get BaseUrl/api/products
         {
@@ -19,12 +27,7 @@ namespace Presentation.Controllers
             return Ok(products);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ProductResponse>> GetProduct(int id)  //Get baseUrl/api/Products/{id}
-        {
-            var products = await serviceManager.ProductService.GetProductAsync(id);
-            return Ok(products);
-        }
+       
 
         [HttpGet("brands")]
         public async Task<ActionResult<IEnumerable<BrandResponse>>>GetBrands() //Get BaseUrl/api/products/brands
