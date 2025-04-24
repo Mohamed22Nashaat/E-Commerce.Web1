@@ -14,7 +14,8 @@ namespace Services
             var product = await unitOfWork.GetRepository<Product, int>().GetAllAsync(specifications);
             var data = mapper.Map<IEnumerable<Product>, IEnumerable<ProductResponse>>(product);
             var pageCount = data.Count();
-            return new(queryParameters.PageIndex,pageCount,0,data);
+            var totalCount = await unitOfWork.GetRepository<Product, int>().CountAsync(new ProductCountSpecifications(queryParameters));
+            return new(queryParameters.PageIndex,pageCount, totalCount, data);
         }
 
         
