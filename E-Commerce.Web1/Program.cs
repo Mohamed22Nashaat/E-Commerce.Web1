@@ -1,12 +1,14 @@
 
 using Domain.Contracts;
 using E_Commerce.Web1.Middelwares;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Data;
 using Persistence.Repositories;
 using Services;
 using ServicesAbstractions;
+using Shared.ErrorModels;
 
 namespace E_Commerce.Web1
 {
@@ -32,6 +34,23 @@ namespace E_Commerce.Web1
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                // Func<ActionContext,IActionResult>
+                options.InvalidModelStateResponseFactory = (context) =>
+                {
+                    // Get the Entries in Model Stat That has validation errors
+                    var errors = context.ModelState.Where(m => m.Value.Errors.Any())
+                    .Select(m=> new ValidationError
+                    {
+                        Field = m.Key,
+                        Errors = m.Value.Errors.Select(error => error.ErrorMessage)
+                    });
+                    var response = new ValidationErrorResponse { ValidationErrors = errors };
+
+                    return new BadRequestObjectResult(response);
+                };
+            });
 
             var app = builder.Build();
             await   InitializeDbAsync(app);
