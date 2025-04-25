@@ -1,5 +1,7 @@
 ﻿
 
+using Domain.Models.Products;
+
 namespace Services.Specifications
 {
     internal class ProductWithBrandAndTypeSpecifications
