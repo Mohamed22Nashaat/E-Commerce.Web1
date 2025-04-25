@@ -3,7 +3,7 @@ using Shared.ErrorModels;
 using System.Net;
 using System.Text.Json;
 
-namespace E_Commerce.Web1.Middelwares
+namespace E_Commerce.Web1.Middlewares
 {
     public class CustomExceptionHandlerMiddleware
     {
@@ -20,7 +20,7 @@ namespace E_Commerce.Web1.Middelwares
             {
                 await _next.Invoke(httpcontext);
                 //Logic
-                await HandleNotFoundEndPointAsync(httpcontext);
+                await HandleNotFoundPathAsync(httpcontext);
             }
             catch (Exception ex)
             {
@@ -44,8 +44,8 @@ namespace E_Commerce.Web1.Middelwares
 
             response.StatusCode = ex switch
             {
-                NotFoundException => (int)HttpStatusCode.NotFound,
-                _ => (int)HttpStatusCode.InternalServerError
+                NotFoundException => StatusCodes.Status404NotFound,
+                _ => StatusCodes.Status500InternalServerError
             };
             // return response as json
             var jsonResult = JsonSerializer.Serialize(response);
@@ -53,7 +53,7 @@ namespace E_Commerce.Web1.Middelwares
             await httpcontext.Response.WriteAsync(jsonResult);
         }
 
-        private static async Task HandleNotFoundEndPointAsync(HttpContext httpcontext)
+        private static async Task HandleNotFoundPathAsync(HttpContext httpcontext)
         {
             if (httpcontext.Response.StatusCode == (int)HttpStatusCode.NotFound)
             {
@@ -62,7 +62,7 @@ namespace E_Commerce.Web1.Middelwares
                 {
 
                     ErrorMessage = $"End Point {httpcontext.Request.Path} Not Found",
-                    StatusCode = (int)HttpStatusCode.NotFound
+                    StatusCode = StatusCodes.Status404NotFound
                 };
                 await httpcontext.Response.WriteAsJsonAsync(response);
             }

@@ -1,7 +1,7 @@
 
 using Domain.Contracts;
 using E_Commerce.Web1.Factories;
-using E_Commerce.Web1.Middelwares;
+using E_Commerce.Web1.Middlewares;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
