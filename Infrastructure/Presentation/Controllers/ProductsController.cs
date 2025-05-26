@@ -4,9 +4,8 @@ using Shared.DataTransferObjects.Products;
 
 namespace Presentation.Controllers
 {
-    [Route("api/[Controller]")]
-    [ApiController]
-    public class ProductsController(IServiceManager serviceManager) : ControllerBase
+    
+    public class ProductsController(IServiceManager serviceManager) : APIController
     {
         // Get all products => IEnumerable<Product> .
         // Get product by id

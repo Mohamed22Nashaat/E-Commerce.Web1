@@ -2,6 +2,8 @@
 
 
 
+using Domain.Models.Products;
+
 namespace Persistence.Data.Configurations
 {
     public class ProductConfigurations : IEntityTypeConfiguration<Product>

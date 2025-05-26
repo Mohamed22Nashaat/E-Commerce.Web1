@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using Domain.Models.Products;
 
 namespace Services.Specifications
 {
@@ -32,7 +29,7 @@ namespace Services.Specifications
             ApplyPagination(parameters.PageSize, parameters.PageIndex);
         }
 
-        private static System.Linq.Expressions.Expression<Func<Product, bool>> CreateCriteria(ProductQueryParameters parameters)
+        private static Expression<Func<Product, bool>> CreateCriteria(ProductQueryParameters parameters)
         {
             return product =>
                 (!parameters.BrandId.HasValue || product.BrandId == parameters.BrandId.Value) &&
